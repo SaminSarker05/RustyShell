@@ -1,1 +1,0 @@
-/Users/saminsarker/Documents/Documents\ -\ Samin’s\ MacBook\ Pro/Projects/RustyShell/rusty-shell/target/debug/rusty-shell: /Users/saminsarker/Documents/Documents\ -\ Samin’s\ MacBook\ Pro/Projects/RustyShell/rusty-shell/src/main.rs
