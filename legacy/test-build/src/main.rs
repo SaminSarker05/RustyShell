@@ -18,7 +18,6 @@ cargo run = runs Rust project and executes the binary
 
 use std::cmp::min;
 
-
 fn main() {
   // 1. variables
   // immutable my default use mut to make mutable
