@@ -16,6 +16,8 @@ cargo build = compiles rust code into machine executable
 cargo run = runs Rust project and executes the binary 
 */
 
+use std::cmp::min;
+
 
 fn main() {
   // 1. variables
@@ -27,6 +29,7 @@ fn main() {
   // println!("{}, {}", x, y);
 
   // 2. statically typed must state type
+  // type annotation
   let integer: i32 = 42;
   let float: f64 = 3.14;
   let boolean: bool = true;
@@ -41,7 +44,6 @@ fn main() {
   add(32, 64);
 
   // 5. if else
-
   let number: i32 = 7;
   if number < 5 {
     println!("less than 5");
@@ -73,12 +75,18 @@ fn main() {
   // 7. rust known for speed and safety
   // no garbage collector
   let s1 = String::from("hello");
+
+  // vectors
+  let mut v1 = Vec::new()
+  v1.push(1);
 }
 
 // 8. functions defined with keyword fn
-// define paramters and return type with arrow 
+// define paramters and return type with arrow
+// if void return type then dont specify
 fn add(a: i32, b: i32) -> i32 {
   a + b
+  // in a function the last statement or tail is whats returned
 }
 
 // 9. structs used for custom data types
@@ -88,3 +96,19 @@ struct User {
   active: bool,
 }
 
+// 10. matching
+fn myMatch(n: i32) {
+  match n {
+    1 => println!("one"),
+    2 => println!("two"),
+    _ => println!("other"),
+  }// must be exhaustive
+}
+
+// use impl to add methods to structs
+
+// 11. can make function/struct templates
+struct myPair<T> {
+  a: T,
+  b: T,
+}
