@@ -116,9 +116,5 @@ fn execute_pipe(commands: Vec<&str>) {
     if let Some(mut prev) = prev_cmd.take() {
       child_process.stdin(prev.stdout(Stdio::piped()).unwrap());
     }
-
-
   }
-  
-  
 }
