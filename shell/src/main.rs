@@ -90,3 +90,30 @@ fn execute_command(command: &str) -> () {
     }
   }
 }
+
+
+fn execute_pipe(commands: Vec<&str>) {
+  let mut prev_cmd: Option<Command> = None;
+  
+  for (ind, cmd) in commands.iter().enumerate() {
+    let mut line = cmd.splite_whitespace();
+    let cmd = line.next().unwrap();
+    let args: Vec<&str> = line.collect();
+
+    let mut child_process = Command::new(cmd)
+      .args(args)
+      .stdin(Stdio::piped());
+    
+    if ind == commands.len() - 1 {
+      if let Some(previous) = prev_cmd.take() {
+        child_process.stdout(prev_cmd.stdout.unwrap());
+      }
+    } else {
+      let child = child_process.spawn();
+      prev_cmd = Some(child);
+    }
+  }
+  if let Some(mut final_cmd) = prev_cmd {
+    let _ = final_cmd.wait();
+  }
+}
