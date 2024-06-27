@@ -1,6 +1,6 @@
 use std::io::stdin;
 use std::io::{self, Write};
-use std::process::Command;
+use std::process::{Command, Stdio};
 use std::env; // environment module
 // std = standard library
 
@@ -91,12 +91,21 @@ fn execute_command(command: &str) -> () {
   }
 }
 
+// OPTION<> enum type represnts value that is or not present; SOME or None
+// RESULT<> enum type represents a sucess or failure
+// SOME<> enum part of option 
+
+// UNWRAP() works on option or result to extract value, if none or err panics
+// TAKE makes option enum empty
+
+
 
 fn execute_pipe(commands: Vec<&str>) {
   let mut prev_cmd: Option<Command> = None;
-  
-  for (ind, cmd) in commands.iter().enumerate() {
-    let mut line = cmd.splite_whitespace();
+  let mut first_cmd: bool = true;
+
+  for cmd in commands {
+    let mut line = cmd.trim().split_whitespace();
     let cmd = line.next().unwrap();
     let args: Vec<&str> = line.collect();
 
@@ -104,16 +113,12 @@ fn execute_pipe(commands: Vec<&str>) {
       .args(args)
       .stdin(Stdio::piped());
     
-    if ind == commands.len() - 1 {
-      if let Some(previous) = prev_cmd.take() {
-        child_process.stdout(prev_cmd.stdout.unwrap());
-      }
-    } else {
-      let child = child_process.spawn();
-      prev_cmd = Some(child);
+    if let Some(mut prev) = prev_cmd.take() {
+      child_process.stdin(prev.stdout(Stdio::piped()).unwrap());
     }
+
+
   }
-  if let Some(mut final_cmd) = prev_cmd {
-    let _ = final_cmd.wait();
-  }
+  
+  
 }
