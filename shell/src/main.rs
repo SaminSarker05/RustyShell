@@ -13,6 +13,8 @@ fn main() {
     stdin().read_line(&mut _input).unwrap();
 
     let mut line = _input.trim().split_whitespace();
+    if input.is_empty() { continue; }
+
     let command = line.next().unwrap();
     let args: Vec<&str> = line.collect();
 
