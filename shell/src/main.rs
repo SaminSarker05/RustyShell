@@ -10,9 +10,14 @@ fn main() {
     let mut _input = String::new();
     stdin().read_line(&mut _input).unwrap();
 
-    let command = _input.trim();
+    let mut line = _input.trim().split_whitespace();
+    let command = line.next().unwrap();
+    let arguments = line;
+
     
+
     let mut child = Command::new(command)
+      .args(arguments)
       .spawn()
       .unwrap();
 
